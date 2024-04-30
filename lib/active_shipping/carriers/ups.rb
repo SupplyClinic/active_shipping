@@ -1121,7 +1121,10 @@ module ActiveShipping
     end
 
     def commit(action, request, test = false)
-      response = ssl_post("#{test ? TEST_URL : LIVE_URL}/#{RESOURCES[action]}", request, {'Authorization' => "Bearer #{@options[:access_token]}"})
+      endpoint = "#{test ? TEST_URL : LIVE_URL}/#{RESOURCES[action]}"
+      headers = { 'Authorization' => "Bearer #{@options[:access_token]}" }
+
+      response = ssl_post(endpoint, request, headers)
       response.encode('utf-8', 'iso-8859-1')
     end
 
